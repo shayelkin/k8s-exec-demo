@@ -1,10 +1,11 @@
 # k8s-exec-demo
 
-A minimal Go application that replicates `kubectl exec` functionality without shelling out to the kubectl executable.
+Replicates `kubectl exec` functionality without shelling out to the kubectl executable.
 
 ## Overview
 
-This tool uses the Kubernetes client-go library to execute commands in pods. Given a Kubernetes context, namespace, and pod name, it executes a command and returns its output.
+This tool uses the Kubernetes client-go library to execute commands in pods. Given a Kubernetes
+context, namespace, and pod name, it executes a command and returns its output.
 
 ## Features
 
@@ -22,23 +23,14 @@ go mod download
 go build -o k8s-exec-demo
 ```
 
-## Usage
+## Command line flags
 
-```bash
-# Basic usage
-./k8s-exec-demo -pod <pod-name> <command> [args...]
+- `-context`: Kubernetes context to use (defaults to current context)
+- `-namespace`: Namespace of the pod (defaults to "default")
+- `-pod`: Pod name (required)
+- `-container`: Container name within the pod (optional, uses first container if not specified)
 
-# With namespace
-./k8s-exec-demo -namespace <namespace> -pod <pod-name> <command> [args...]
-
-# With context
-./k8s-exec-demo -context <context> -namespace <namespace> -pod <pod-name> <command> [args...]
-
-# With specific container
-./k8s-exec-demo -pod <pod-name> -container <container-name> <command> [args...]
-```
-
-## Examples
+## Usage examples
 
 ```bash
 # Run ls in a pod
@@ -50,13 +42,6 @@ go build -o k8s-exec-demo
 # Use specific context and container
 ./k8s-exec-demo -context staging -pod my-pod -container main-container ps aux
 ```
-
-## Flags
-
-- `-context`: Kubernetes context to use (defaults to current context)
-- `-namespace`: Namespace of the pod (defaults to "default")
-- `-pod`: Pod name (required)
-- `-container`: Container name within the pod (optional, uses first container if not specified)
 
 ## How it works
 
@@ -73,4 +58,16 @@ The tool:
 - k8s.io/client-go: Kubernetes Go client
 - k8s.io/api: Kubernetes API types
 
-No external kubectl binary required.
+## License
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
